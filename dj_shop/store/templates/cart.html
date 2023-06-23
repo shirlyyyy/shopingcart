@@ -1,0 +1,45 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<div class="shoppingCart">
+  <h2>My Cart</h2>
+
+  <div class="heading">
+    <div class="p_name"><h4>Product's Name</h4></div>
+    <div class="name"><h4>Quantity</h4></div>
+    <div class="name"><h4>Unit Price</h4></div>
+    <div class="name"><h4>Price</h4></div>
+    <div class="name"><h4>Actions</h4></div>
+  </div>
+
+  <div class="itemContainer">
+    {% for item in items %}
+    <div class="item">
+      <div class="iteminfo">
+        <div class="p_img">
+          <img src="{{item.product.picture.url}}" alt="" />
+        </div>
+        <p>{{item.product.name}}</p>
+      </div>
+
+      <div class="name"><p>{{item.quantity}}</p></div>
+      <div class="name"><p>${{item.product.price}}</p></div>
+      <div class="name"><p>${{item.price}}</p></div>
+      <div class="name">
+        <button class="removeBtn" value="{{ item.id }}">Remove</button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="checkout-section">
+    <div class="total">
+      <h3>Grand Total: ${{ cart.total_price }}</h3>
+    </div>
+    <form action="{% url 'checkout' %}" method="post">
+      {% csrf_token %}
+      <button type="submit">CheckOut</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}
